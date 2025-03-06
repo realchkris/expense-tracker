@@ -35,8 +35,8 @@
 <script>
 
 import { ref, onMounted, computed } from "vue";
-import ExpenseInput from "../components/router/ExpenseInputRouter.vue";
-import ExpenseList from "../components/router/ExpenseListRouter.vue";
+import ExpenseInput from "../components/ExpenseInput.vue";
+import ExpenseList from "../components/ExpenseList.vue";
 
 // Pinia stuff
 import { useExpenseStore } from "../stores/useExpenseStore";

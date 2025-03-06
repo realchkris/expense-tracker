@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+const APIBase = `https://67ae2a679e85da2f020caaf8.mockapi.io/et`; // URL + API Prefix
+
 export const useExpenseStore = defineStore('expenseStore', {
   state: () => ({
     expenses: [],
@@ -11,7 +13,7 @@ export const useExpenseStore = defineStore('expenseStore', {
     // Fetches the expenses from the API and loads them to local state
     async fetchExpenses() {
       try {
-        const response = await fetch("https://67ae2a679e85da2f020caaf8.mockapi.io/et/expenses");
+        const response = await fetch(`${APIBase}/expenses`);
         if (!response.ok) throw new Error("Failed to fetch expenses");
         this.expenses = await response.json();
         this.errorMessage = ""; // Clear error on success
@@ -30,7 +32,7 @@ export const useExpenseStore = defineStore('expenseStore', {
       this.expenses.push(tempExpense);
 
       try {
-        const response = await fetch("https://67ae2a679e85da2f020caaf8.mockapi.io/et/expenses", {
+        const response = await fetch(`${APIBase}/expenses`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: item.name, amount: item.amount }), // Send only required fields
@@ -60,7 +62,7 @@ export const useExpenseStore = defineStore('expenseStore', {
       this.expenses = this.expenses.filter(expense => expense.id !== id); // Optimistic UI
 
       try {
-        const response = await fetch(`https://67ae2a679e85da2f020caaf8.mockapi.io/et/expenses/${id}`, {
+        const response = await fetch(`${APIBase}/expenses/${id}`, {
           method: "DELETE",
         });
 
@@ -89,7 +91,7 @@ export const useExpenseStore = defineStore('expenseStore', {
       // Sending PUT for API change
       try {
 
-        const response = await fetch(`https://67ae2a679e85da2f020caaf8.mockapi.io/et/expenses/${id}`, {
+        const response = await fetch(`${APIBase}/expenses/${id}`, {
           method: "PUT", // Changed from PATCH to PUT
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.expenses[index]), // Send full object (as it's PUT)

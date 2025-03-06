@@ -1,8 +1,6 @@
 import { createApp } from 'vue'
 
-// import App from './App.vue' // Imports the Local version
-// import App from './AppAPI.vue' // Imports the API version
-import App from './AppRouter.vue' // Imports the Router version
+import App from './App.vue' // Imports the Router version
 
 import './output.css';  // Needed for Tailwind CSS
 import { createPinia } from 'pinia'; // Needed for Pinia

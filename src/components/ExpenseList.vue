@@ -33,7 +33,7 @@
 
 <script>
 
-import ExpenseItem from "./ExpenseItemAPI.vue";
+import ExpenseItem from "./ExpenseItem.vue";
 
 import { useExpenseStore } from "@/stores/useExpenseStore";
 import { storeToRefs } from "pinia";
