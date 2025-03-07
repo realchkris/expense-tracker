@@ -1,6 +1,7 @@
 <template>
 
-	<div class="p-4 bg-white rounded-lg shadow-md max-w-md mx-auto m-3">
+	<div class="white-section m-3 max-w-2xl mx-auto w-full">
+
 		<h2 class="text-xl font-semibold mb-4 text-center">Your Expenses</h2>
 
 		<!-- Filter Expenses -->

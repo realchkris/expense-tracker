@@ -4,47 +4,54 @@
   <button
   v-if="addExpenseMode == false"
   @click="addExpenseMode = true"
-  class="m-3 bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-400 transition-all duration-300 flex-shrink-0"
+  class="btn btn-teal"
   >➕</button>
 
   <!-- Input Fields -->
   <div
-  v-if="addExpenseMode"
-  class="flex items-center space-x-2 shadow-md">
+    v-if="addExpenseMode"
+    class="emerald-section emerald-hover flex items-center space-x-2"
+  >
 
-    <!-- Expense amount -->
-    <span class="text-lg">$</span>
+    <!-- Expense Amount -->
+    <span class="text-lg font-bold text-white">$</span>
     <input
       @keydown.enter="addExpense"
       @keydown.esc="clearFields"
-      class="bg-gray-100 w-20 p-2 rounded-lg"
+      class="w-20 input-field"
       v-model="itemAmount"
       type="number"
       required
     >
 
-    <!-- Expense name -->
+    <!-- Expense Name -->
     <input
       @keydown.enter="addExpense"
       @keydown.esc="clearFields"
-      class="bg-gray-100 flex-1 p-2 rounded-lg"
+      class="flex-1 input-field"
       v-model="itemName"
       type="text"
       placeholder="Detail expense here..."
       required
     >
 
-    <!-- Done Adding Expense Button -->
+    <!-- Done Adding Expense Button (Admin) -->
     <button
       v-if="isAdmin"
       @click="addExpense"
-      class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+      class="btn btn-emerald"
+    >✔️</button>
+
+    <!-- Done Adding Expense Button (Viewer) -->
+    <button
+      v-if="!isAdmin"
+      class="btn btn-gray"
     >✔️</button>
 
     <!-- Cancel Adding Expense Button -->
     <button
       @click="() => {addExpenseMode = false; clearFields();}"
-      class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+      class="btn btn-red"
     >❌</button>
 
   </div>
@@ -102,3 +109,19 @@ export default {
 };
 
 </script>
+
+<style scoped>
+
+.btn-emerald {
+  @apply bg-teal-600 hover:bg-teal-500;
+}
+
+.btn-red {
+  @apply bg-red-500 hover:bg-red-400;
+}
+
+.btn-gray {
+  @apply bg-gray-500 hover:bg-gray-400;
+}
+
+</style>

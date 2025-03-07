@@ -1,75 +1,99 @@
 <template>
 
-	<div class="flex flex-nowrap justify-between items-center bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-xs">
-		<!-- Expense name, amount -->
-		<div
-			v-if="!isEditing"
-			:class="{
-				'text-red-600': amount > 100,
-				'text-yellow-600': amount <= 100 && amount >= 50,
-				'text-green-600': amount < 50
-			}" 
-			class="flex-1 flex flex-col items-start bg-gray-300 rounded-md p-3 min-w-0"
-		>
-			<div class="text-lg font-semibold">${{ amount }}</div>
-			<div class="text-sm break-words whitespace-normal overflow-hidden text-ellipsis min-w-0 max-w-[150px]">
-				{{ name }}
-			</div>
-		</div>
+	<div class="light-gray-section light-gray-section-hover flex justify-between items-center w-full max-w-2xl">
 
-		<!-- Expense name, amount EDIT MODE -->
-		<div
-			v-else
-			class="flex-1 flex flex-col items-start bg-gray-300 rounded-md p-3 min-w-0"
-		>
-			<div>
-				<span>$</span>
+		<!-- Expense name, amount -->
+		<div class="gray-section flex-1 flex flex-col items-start min-w-0">
+
+			<!-- Read mode -->
+			<div
+				v-if="!isEditing"
+				:class="{
+					'text-red-600': amount > 100,
+					'text-yellow-600': amount <= 100 && amount >= 50,
+					'text-green-600': amount < 50
+				}"
+			>
+
+				<div class="text-lg font-semibold">${{ amount }}</div>
+				<div class="text-sm">
+					{{ truncatedName }}
+				</div>
+
+			</div>
+
+			<!-- Edit Mode -->
+			<div
+				v-else 
+				class="space-y-2 w-full"
+			>
+
+				<div class="flex items-center space-x-2">
+
+					<span class="text-lg font-semibold">$</span>
+					<input
+						@keydown.enter="updateExpense"
+						@keydown.esc="isEditing = false"
+						class="w-full input-field"
+						type="number"
+						v-model="localAmount"
+						:readonly="!isAdmin"
+					>
+
+				</div>
+
 				<input
-					v-if="isAdmin"
 					@keydown.enter="updateExpense"
 					@keydown.esc="isEditing = false"
-					class="mb-2 w-full max-w-full p-2 rounded-lg min-w-0"
-					type="number" v-model="localAmount"
+					class="w-full input-field"
+					type="text"
+					v-model="localName"
+					:readonly="!isAdmin"
 				>
+
 			</div>
-			<input
-				v-if="isAdmin"
-				@keydown.enter="updateExpense"
-				@keydown.esc="isEditing = false"
-				class="w-full max-w-full p-2 rounded-lg min-w-0"
-				type="text" v-model="localName"
-			>
+
 		</div>
 
-		<!-- View button -->
-		<nav>
-			<router-link
-				:to="`/expenses/${id}`"
-				class="ml-3 bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-400 transition-all duration-300 flex-shrink-0"
-			>👁️</router-link>
-		</nav>
+		<!-- Action Buttons -->
+		<div class="flex flex-wrap space-x-2 ml-3">
 
-		<!-- Edit button -->
-		<button
-			v-if="!isEditing"
-			@click="isEditing = !isEditing"
-			class="ml-3 bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-400 transition-all duration-300 flex-shrink-0"
-		>✏️</button>
+			<!-- View Button -->
+			<button class="btn btn-teal">
+			  <router-link :to="`/expenses/${id}`">
+			    🔍
+			  </router-link>
+			</button>
 
-		<!-- Edit mode done button -->
-		<button
-			v-else
-			@click="updateExpense"
-			class="ml-3 bg-green-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-400 transition-all duration-300 flex-shrink-0"
-		>✔️</button>
+			<!-- Edit Button -->
+			<button
+				v-if="!isEditing"
+				@click="isEditing = !isEditing"
+				class="btn btn-teal"
+			>✏️</button>
 
-		<!-- Delete button -->
-		<button
-			v-if="isAdmin"
-			class="ml-3 bg-red-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-red-400 transition-all duration-300 flex-shrink-0"
-			@click="deleteExpense"
-		>🗑️</button>
-		
+			<!-- Edit Mode Done Button -->
+			<button
+				v-else
+				@click="updateExpense"
+				class="btn btn-green"
+			>✔️</button>
+
+			<!-- Delete Button (Admin) -->
+			<button
+				v-if="isAdmin"
+				class="btn btn-red"
+				@click="deleteExpense"
+			>🗑️</button>
+
+			<!-- Delete Button (Viewer) -->
+			<button
+				v-if="!isAdmin"
+				class="btn btn-gray"
+			>🗑️</button>
+			
+		</div>
+
 	</div>
 
 </template>
@@ -77,7 +101,7 @@
 <script>
 
 import { useExpenseStore } from "../stores/useExpenseStore";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 export default {
 
@@ -92,6 +116,11 @@ export default {
 		const localName = ref(props.name); // Used to edit name (as prop is read-only)
 
 		const expenseStore = useExpenseStore(); // Pinia store
+
+		// Avoids name overflow
+		const truncatedName = computed(() => {
+		  return props.name.length > 15 ? props.name.substring(0, 12) + "..." : props.name;
+		});
 
 		const updateExpense = () => {
 
@@ -112,10 +141,11 @@ export default {
 			expenseStore.deleteExpense(props.id);
 		}
 
-		return { isEditing, localAmount, localName, updateExpense, deleteExpense };
+		return { isEditing, localAmount, localName, updateExpense, deleteExpense, truncatedName };
 
 	}
 
 };
 	
 </script>
+

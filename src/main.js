@@ -2,7 +2,9 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 
+import './input.css';  // Import global Tailwind styles
 import './output.css';  // Needed for Tailwind CSS
+
 import { createPinia } from 'pinia'; // Needed for Pinia
 import router from './router'; // Needed for Vue Router
 

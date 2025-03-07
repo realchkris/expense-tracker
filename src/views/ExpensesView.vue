@@ -1,13 +1,10 @@
 <template>
   
-  <div class="h-screen flex flex-col items-center justify-start p-3 bg-gray-100">
-    
-    <h1 class="text-2xl font-bold mb-4">Your Expenses</h1>
+  <div class="h-screen flex flex-col items-center justify-start">
 
     <!-- Expense Input -->
     <ExpenseInput
       :isAdmin="isAdmin"
-      class="flex justify-center bg-gray-200 p-3 space-x-4 max-w-lg w-full rounded-lg"
       @add-expense="addExpense"
       @input-error="inputError"
     />
@@ -24,10 +21,10 @@
     <!-- Total expenses -->
     <div
       v-if="totalExpensesAmount > 0"
-      class="p-3 bg-gray-200 rounded-lg shadow-md text-xl font-semibold text-center w-full max-w-md mx-auto"
+      class="white-section text-xl font-semibold text-center w-full max-w-2xl mx-auto"
     >
       <span class="mr-2">Total expenses:</span>
-      <span class="text-blue-600">${{ totalExpensesAmount }}</span>
+      <span class="text-teal-600">${{ totalExpensesAmount }}</span>
     </div>
 
   </div>

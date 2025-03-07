@@ -1,3 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+
+  .btn {
+    @apply text-white font-semibold py-2 px-4 rounded-md shadow-md transition-all duration-300;
+  }
+
+  .btn-teal {
+    @apply bg-teal-600 hover:bg-teal-500;
+  }
+
+  .btn-green {
+    @apply bg-green-500 hover:bg-green-400;
+  }
+
+  .btn-red {
+    @apply bg-red-500 hover:bg-red-400;
+  }
+
+  .btn-gray {
+    @apply bg-gray-400 hover:bg-gray-300;
+  }
+
+  .input-field {
+    @apply p-2 rounded-lg border border-gray-400 bg-gray-100 text-gray-500;
+  }
+
+  .white-section {
+    @apply p-3 bg-white rounded-lg shadow-md;
+  }
+
+  .light-gray-section {
+    @apply p-3 bg-gray-200 rounded-lg shadow-md;
+  }
+
+  .light-gray-section-hover:hover {
+    @apply bg-gray-100 duration-300;
+  }
+
+  .gray-section {
+    @apply p-3 bg-gray-300 rounded-lg shadow-md;
+  }
+
+  .emerald-section {
+    @apply bg-emerald-800 p-4 rounded-lg shadow-md;
+  }
+
+  .emerald-hover:hover {
+    @apply bg-emerald-700 duration-300;
+  }
+
+}
