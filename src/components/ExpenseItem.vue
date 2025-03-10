@@ -119,7 +119,7 @@ export default {
 
 		// Avoids name overflow
 		const truncatedName = computed(() => {
-		  return props.name.length > 15 ? props.name.substring(0, 12) + "..." : props.name;
+		  return props.name.length > 20 ? props.name.substring(0, 17) + "..." : props.name;
 		});
 
 		const updateExpense = () => {

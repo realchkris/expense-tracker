@@ -1,6 +1,6 @@
 <template>
 
-  <div class="bg-gradient-to-t from-slate-300 to-gray-50">
+  <div class="bg-gradient-to-t from-slate-300 to-gray-50 min-h-screen flex flex-col p-3">
 
     <!-- Header -->
     <div class="emerald-section relative flex items-center justify-center m-3">
@@ -33,7 +33,7 @@
     </div>
 
     <!-- Homepage view -->
-    <router-view :isAdmin="isAdmin" />
+    <router-view :isAdmin="isAdmin" class="flex-1" />
     
   </div>
 
