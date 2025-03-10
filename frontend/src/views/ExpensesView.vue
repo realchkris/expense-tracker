@@ -9,6 +9,15 @@
       @input-error="inputError"
     />
 
+    <!-- Total expenses -->
+    <div
+      v-if="totalExpensesAmount > 0"
+      class="white-section mt-3 text-xl font-semibold text-center w-full max-w-2xl mx-auto"
+    >
+      <span class="mr-2">Total expenses:</span>
+      <span class="text-teal-600">${{ totalExpensesAmount }}</span>
+    </div>
+
     <!-- Expense List -->
     <ExpenseList
       :isAdmin="isAdmin"
@@ -17,15 +26,6 @@
       @update:selectedFilter="selectedFilter = $event"
       @input-error="inputError"
     />
-
-    <!-- Total expenses -->
-    <div
-      v-if="totalExpensesAmount > 0"
-      class="white-section text-xl font-semibold text-center w-full max-w-2xl mx-auto"
-    >
-      <span class="mr-2">Total expenses:</span>
-      <span class="text-teal-600">${{ totalExpensesAmount }}</span>
-    </div>
 
   </div>
 

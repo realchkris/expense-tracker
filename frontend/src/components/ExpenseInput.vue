@@ -2,15 +2,15 @@
 
   <!-- Add Expense Button -->
   <button
-  v-if="addExpenseMode == false"
-  @click="addExpenseMode = true"
-  class="btn btn-teal"
+    v-if="!addExpenseMode"
+    @click="addExpenseMode = true"
+    class="btn btn-teal"
   >➕</button>
 
   <!-- Input Fields -->
   <div
     v-if="addExpenseMode"
-    class="emerald-section emerald-hover flex items-center space-x-2"
+    class="emerald-section emerald-hover flex flex-wrap items-center gap-2 w-full max-w-xl"
   >
 
     <!-- Expense Amount -->
@@ -18,7 +18,7 @@
     <input
       @keydown.enter="addExpense"
       @keydown.esc="clearFields"
-      class="w-20 input-field"
+      class="input-field w-1/4 md:w-1/6 min-w-20"
       v-model="itemAmount"
       type="number"
       required
@@ -28,7 +28,7 @@
     <input
       @keydown.enter="addExpense"
       @keydown.esc="clearFields"
-      class="flex-1 input-field"
+      class="flex-1 input-field w-full min-w-20"
       v-model="itemName"
       type="text"
       placeholder="Detail expense here..."
@@ -39,20 +39,37 @@
     <button
       v-if="isAdmin"
       @click="addExpense"
-      class="btn btn-emerald"
-    >✔️</button>
+      class="btn btn-emerald flex items-center justify-center w-12 h-12"
+    >
+      <img
+        src="../assets/check.png"
+        class="w-12 h-12 object-contain shrink-0"
+      >
+    </button>
 
     <!-- Done Adding Expense Button (Viewer) -->
     <button
       v-if="!isAdmin"
-      class="btn btn-gray"
-    >✔️</button>
+      class="btn btn-gray flex items-center justify-center w-12 h-12"
+    >
+      <img
+        src="../assets/check.png"
+        class="w-12 h-12 object-contain shrink-0"
+      >
+    </button>
 
     <!-- Cancel Adding Expense Button -->
     <button
       @click="() => {addExpenseMode = false; clearFields();}"
-      class="btn btn-red"
-    >❌</button>
+      class="btn btn-red flex items-center justify-center w-12 h-12"
+    >
+
+      <img
+        src="../assets/close.png"
+        class="w-12 h-12 object-contain shrink-0"
+      >
+
+    </button>
 
   </div>
 

@@ -4,7 +4,7 @@ A minimal full-stack Expense Tracker built with Vue 3 (Vite), Pinia, Vue Router,
 
 This project is designed to showcase frontend and backend development skills, emphasizing API security, state management, and modular UI components.
 
-Demo: https://expense-tracker-jet-xi.vercel.app/
+[Demo (backend might be down)](https://expense-tracker-jet-xi.vercel.app/)
 
 
 	⚠️ Note: This project relies on MockAPI for backend operations. To prevent direct API exposure, a Node.js proxy server has been added, hosted on Render, and environment variables (.env) are used.
