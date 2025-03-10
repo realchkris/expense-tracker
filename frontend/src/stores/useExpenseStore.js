@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-const APIBase = "http://localhost:3001/api"; // Proxy URL
+const APIBase = import.meta.env.VITE_API_BASE; // Proxy URL
 
 export const useExpenseStore = defineStore('expenseStore', {
   state: () => ({
