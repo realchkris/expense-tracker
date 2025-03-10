@@ -31,3 +31,5 @@ backend/.env  # Ignore backend environment variables
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
