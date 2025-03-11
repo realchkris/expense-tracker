@@ -42,6 +42,22 @@ This project is designed to showcase frontend and backend development skills, em
 
 ## 2. Setup the Backend (Proxy)
 
+The project uses MockAPI as a simulated database to store expenses.
+MockAPI endpoint example:
+
+	https://your-mockapi-url.com/et/expenses
+
+Each expense is stored as JSON data in this structure:
+
+	{
+	  "id": "1",
+	  "name": "Groceries",
+	  "amount": 121.03,
+	  "description": "Weekly shopping list"
+	}
+
+To setup the backend, first install the dependencies:
+
 	cd backend
 	npm install
 
