@@ -5,22 +5,33 @@ const APIBase = import.meta.env.VITE_API_BASE; // Proxy URL
 export const useExpenseStore = defineStore('expenseStore', {
   state: () => ({
     expenses: [],
-    errorMessage: ""
+    errorMessage: "",
+    loading: false, // Loading state for user experience
   }),
 
   actions: {
 
     // Fetches the expenses from the API and loads them to local state
     async fetchExpenses() {
+
+      this.loading = true; // Start loading
+
       try {
+
         const response = await fetch(`${APIBase}/expenses`);
         if (!response.ok) throw new Error("Failed to fetch expenses");
         this.expenses = await response.json();
         this.errorMessage = ""; // Clear error on success
+
       } catch (error) {
+
         this.errorMessage = "Could not fetch expenses. Please try again.";
         console.error(error);
+
+      } finally {
+        this.loading = false; // Stop loading when done
       }
+
     },
 
     // Adds an expense to the API array (+ Optimistic UI)

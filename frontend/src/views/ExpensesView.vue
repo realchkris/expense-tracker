@@ -21,11 +21,19 @@
     <!-- Expense List -->
     <ExpenseList
       :isAdmin="isAdmin"
-      v-if="expenses.length > 0"
+      v-if="!expenseStore.loading && expenses.length > 0"
       :selectedFilter="selectedFilter"
       @update:selectedFilter="selectedFilter = $event"
       @input-error="inputError"
     />
+
+    <!-- Loading GIF while fetching expenses -->
+    <div
+      v-if="expenseStore.loading"
+      class="flex items-center justify-center p-6"
+    >
+      <img src="../assets/loading.gif" alt="Loading..." class="w-16 h-16">
+    </div>
 
   </div>
 
@@ -50,7 +58,7 @@ export default {
 
     // Initialize Pinia store
     const expenseStore = useExpenseStore();
-    const { expenses, errorMessage } = storeToRefs(expenseStore); // Main array of expenses & variable used for errors. storeToRefs() ensures reactivity in Vue
+    const { expenses, errorMessage, loading } = storeToRefs(expenseStore); // Main array of expenses & variable used for errors. storeToRefs() ensures reactivity in Vue
 
     const selectedFilter = ref("all"); // Variable used for filtering, passed as a prop to ExpenseListRouter.vue
 
@@ -68,7 +76,7 @@ export default {
       errorMessage.value = currentErrorMessage;
     }
 
-    return { expenses, errorMessage, selectedFilter, inputError, totalExpensesAmount };
+    return { expenseStore, expenses, errorMessage, selectedFilter, inputError, totalExpensesAmount };
 
   }
 
