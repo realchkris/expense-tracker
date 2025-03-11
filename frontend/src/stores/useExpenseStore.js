@@ -3,13 +3,27 @@ import { defineStore } from 'pinia';
 const APIBase = import.meta.env.VITE_API_BASE; // Proxy URL
 
 export const useExpenseStore = defineStore('expenseStore', {
+
   state: () => ({
     expenses: [],
     errorMessage: "",
     loading: false, // Loading state for user experience
+    isAdmin: localStorage.getItem("isAdmin") === "true" // Retrieve admin status
   }),
 
+  getters: {
+    adminHeaders(state) {
+      return state.isAdmin ? { "x-admin-password": import.meta.env.VITE_ADMIN_PASSWORD } : {};
+    }
+  },
+
   actions: {
+
+    // Edit admin status
+    setAdminStatus(status) {
+      this.isAdmin = status;
+      localStorage.setItem("isAdmin", status ? "true" : "false");
+    },
 
     // Fetches the expenses from the API and loads them to local state
     async fetchExpenses() {
@@ -43,9 +57,10 @@ export const useExpenseStore = defineStore('expenseStore', {
       this.expenses.push(tempExpense);
 
       try {
+
         const response = await fetch(`${APIBase}/expenses`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...this.adminHeaders },
           body: JSON.stringify({ name: item.name, amount: item.amount }), // Send only required fields
         });
 
@@ -58,6 +73,7 @@ export const useExpenseStore = defineStore('expenseStore', {
         if (index !== -1) {
           this.expenses[index] = newExpense;
         }
+
         this.errorMessage = ""; // Clear error on success
 
       } catch (error) {
@@ -69,12 +85,15 @@ export const useExpenseStore = defineStore('expenseStore', {
 
     // Deletes an expense from the API array (+ Optimistic UI)
     async deleteExpense(id) {
+
       const originalExpenses = [...this.expenses]; // Backup for rollback
       this.expenses = this.expenses.filter(expense => expense.id !== id); // Optimistic UI
 
       try {
+
         const response = await fetch(`${APIBase}/expenses/${id}`, {
           method: "DELETE",
+          headers: { ...this.adminHeaders },
         });
 
         if (!response.ok) throw new Error("Failed to delete expense");
@@ -86,6 +105,7 @@ export const useExpenseStore = defineStore('expenseStore', {
         this.errorMessage = "Failed to delete expense. Please try again.";
         console.error(error);
       }
+
     },
 
     // Updates an expense in the API array (+ Optimistic UI)
@@ -104,7 +124,7 @@ export const useExpenseStore = defineStore('expenseStore', {
 
         const response = await fetch(`${APIBase}/expenses/${id}`, {
           method: "PUT", // Changed from PATCH to PUT
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...this.adminHeaders },
           body: JSON.stringify(this.expenses[index]), // Send full object (as it's PUT)
         });
 
