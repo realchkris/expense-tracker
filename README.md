@@ -4,7 +4,7 @@ A minimal full-stack Expense Tracker built with Vue 3 (Vite), Pinia, Vue Router,
 
 This project is designed to showcase frontend and backend development skills, emphasizing API security, state management, and modular UI components.
 
-[Demo (backend might be down)](https://expense-tracker-jet-xi.vercel.app/)
+[Demo (backend might be slow)](https://expense-tracker-jet-xi.vercel.app/)
 
 
 	⚠️ Note: This project relies on MockAPI for backend operations. To prevent direct API exposure, a Node.js proxy server has been added, hosted on Render, and environment variables (.env) are used.
@@ -24,11 +24,46 @@ This project is designed to showcase frontend and backend development skills, em
 - Admin login with an environment-protected password.
 
 # Tech Stack
-- ⚡ Vue 3 + Vite --- Fast & modern frontend development.
-- 🗂 Pinia --- Simple yet powerful state management.
+- ⚡ Vue 3 + Vite --- Frontend development.
+- 🗂 Pinia --- State management.
 - 🌍 Vue Router --- Handles page navigation.
 - 🎨 Tailwind CSS --- For a clean, responsive UI.
 - 🔗 MockAPI --- Backend simulation with a Node.js proxy to enhance security.
 - 🛡 Node.js + Express --- API proxy to protect MockAPI.
 - 🚀 Render --- Backend hosting.
 - 🌐 Vercel --- Frontend deployment.
+
+# 🖥️ Local Development Setup
+
+## 1. Clone the repository
+
+	git clone https://github.com/realchkris/expense-tracker.git
+	cd expense-tracker
+
+## 2. Setup the Backend (Proxy)
+
+	cd backend
+	npm install
+
+Create a .env file inside backend/ and add:
+
+	PORT=3001
+	API_BASE=https://your-mockapi-url.com/et
+	ADMIN_PASSWORD=yourpassword
+
+Start the backend server:
+
+	npm start
+
+## 3. Setup the Frontend
+
+	cd ../frontend
+	npm install
+
+Create a .env file inside frontend/ and add:
+
+	VITE_API_BASE=http://localhost:3001/api
+
+Start the frontend server:
+
+	npm run dev
